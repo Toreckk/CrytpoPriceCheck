@@ -8,12 +8,13 @@
         Title="MainWindow" Height="500" Width="850">
     <Grid Background="#FF62D5E9">
         <TextBox Name="SearchBar" Grid.ZIndex="1"  HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="SearchBar_TextChanged" />
-        <Button Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="60" Height="23" />
+        <Button Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="60" Height="23" Click="btnSearch_Click" />
 
         <Label Name="lblName" Content="Name" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="215,95,0,0" VerticalAlignment="Top" Width="260" Height="65" FontWeight="Bold" FontFamily="Arial Black" FontSize="20" />
         <Label Name="lblPrice" Content="Price" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="545,95,0,0" VerticalAlignment="Top" Height="67" Width="205" />
         <Label Name="lblRank" Content="Rank" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="55,95,0,0" VerticalAlignment="Top" Height="65" Width="75" />
-        <ComboBox Name="lblSuggestions" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Width="120" Height="5">
+        <ComboBox Name="lblSuggestions" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Width="120" Height="5" SelectionChanged="lblSuggestions_SelectionChanged_1">
         </ComboBox>
+        <Label Name="lblUpdates" Content="" HorizontalAlignment="Left" Margin="400,33,0,0" VerticalAlignment="Top" />
     </Grid>
 </Window>

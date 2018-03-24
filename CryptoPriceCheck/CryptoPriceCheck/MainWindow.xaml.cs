@@ -27,30 +27,32 @@ namespace CryptoPriceCheck
     public partial class MainWindow : Window
     {
         public List<Coin> Cryptos { get; set; }
+        public int ActiveCoinRank { get; set; }
 
         public MainWindow()
         {
+            ActiveCoinRank = 0;
             GetCryptoCurrencyInfo();
             InitializeComponent();
 
-            UpdateUI(0);//We start showing the data for the #1 coin
+            UpdateUI(ActiveCoinRank);//We start showing the data for the #1 coin
 
             //dispatchtimer will update the UI every 30s
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimeronTick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 30);//will update every 10 mins
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 20);//will update every 1 min
             dispatcherTimer.Start();
         }
 
         private void DispatcherTimeronTick(object sender, EventArgs eventArgs)
         {
             GetCryptoCurrencyInfo();
-            UpdateUI(1);
+            UpdateUI(ActiveCoinRank);
         }
 
         public void GetCryptoCurrencyInfo()
         {
-            HttpWebRequest WebReq = (HttpWebRequest)WebRequest.Create(string.Format("https://api.coinmarketcap.com/v1/ticker/?limit=50"));
+            HttpWebRequest WebReq = (HttpWebRequest)WebRequest.Create(string.Format("https://api.coinmarketcap.com/v1/ticker/"));
 
             WebReq.Method = "GET";
 
@@ -74,6 +76,7 @@ namespace CryptoPriceCheck
             lblName.Content = $"{Cryptos[CoinRank].name}";
             lblPrice.Content = $"${Cryptos[CoinRank].price_usd}";
             lblRank.Content = $"#{Cryptos[CoinRank].rank}";
+            SearchBar.Text = "";
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
@@ -110,17 +113,27 @@ namespace CryptoPriceCheck
             }
         }
 
-        private void lblSuggestions_SelectionChanged(Object sender, SelectionChangedEventArgs e)
+        private void lblSuggestions_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             if (lblSuggestions.ItemsSource != null)
             {
                 lblSuggestions.Visibility = Visibility.Collapsed;
-                SearchBar.TextChanged -= new TextChangedEventHandler(SearchBar_TextChanged);
-                if (lblSuggestions.SelectedIndex != -1)
+                //SearchBar.TextChanged += new TextChangedEventHandler(SearchBar_TextChanged);
+                SearchBar.Text = lblSuggestions.SelectedItem.ToString();
+            }
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            //find rank of coin
+            foreach (Coin cn in Cryptos)
+            {
+                if (cn.name.ToLower().Equals(SearchBar.Text.ToLower()))
                 {
-                    SearchBar.Text = lblSuggestions.SelectedItem.ToString();
+                    ActiveCoinRank = Int32.Parse(cn.rank) - 1;
                 }
             }
+            UpdateUI(ActiveCoinRank);
         }
     }
 }
