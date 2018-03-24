@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using CryptoPriceChecker.Crypto;
 using Newtonsoft.Json;
 
@@ -28,11 +30,22 @@ namespace CryptoPriceCheck
 
         public MainWindow()
         {
+            GetCryptoCurrencyInfo();
             InitializeComponent();
 
-            GetCryptoCurrencyInfo();
+            UpdateUI(0);//We start showing the data for the #1 coin
 
-            DataContext = this;
+            //dispatchtimer will update the UI every 30s
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += DispatcherTimeronTick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 30);//will update every 10 mins
+            dispatcherTimer.Start();
+        }
+
+        private void DispatcherTimeronTick(object sender, EventArgs eventArgs)
+        {
+            GetCryptoCurrencyInfo();
+            UpdateUI(1);
         }
 
         public void GetCryptoCurrencyInfo()
@@ -56,24 +69,58 @@ namespace CryptoPriceCheck
             Cryptos = JsonConvert.DeserializeObject<List<Coin>>(jsonString);
         }
 
-        //ComboBox Changes
-
-        private void cb1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        public void UpdateUI(int CoinRank)
         {
-            int rank = cb1.SelectedIndex;
-            tb1.Header = $"{Cryptos[rank].name} {Cryptos[rank].price_usd}$";
+            lblName.Content = $"{Cryptos[CoinRank].name}";
+            lblPrice.Content = $"${Cryptos[CoinRank].price_usd}";
+            lblRank.Content = $"#{Cryptos[CoinRank].rank}";
         }
 
-        private void cb2_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int rank = cb2.SelectedIndex;
-            tb2.Header = $"{Cryptos[rank].name} {Cryptos[rank].price_usd}$";
+            string SearchedTerm = SearchBar.Text.ToLower();
+            List<string> Suggestions = new List<string>();
+
+            for (int i = 0; i < Cryptos.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(SearchBar.Text))
+                {
+                    if (Cryptos[i].name.ToLower().Contains(SearchedTerm) || Cryptos[i].id.ToLower().Contains(SearchedTerm) ||
+                        Cryptos[i].symbol.ToLower().Contains(SearchedTerm))
+                    {
+                        Suggestions.Add(Cryptos[i].name);
+                    }
+                }
+            }
+            if (Suggestions.Count > 0)//if there are available suggestions
+            {
+                lblSuggestions.ItemsSource = Suggestions;
+                lblSuggestions.Visibility = Visibility.Visible;
+                lblSuggestions.IsDropDownOpen = true;
+            }
+            else if (SearchBar.Text.Equals(""))
+            {
+                lblSuggestions.Visibility = Visibility.Collapsed;
+                lblSuggestions.ItemsSource = null;
+            }
+            else
+            {
+                lblSuggestions.Visibility = Visibility.Collapsed;
+                lblSuggestions.ItemsSource = null;
+            }
         }
 
-        private void cb3_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void lblSuggestions_SelectionChanged(Object sender, SelectionChangedEventArgs e)
         {
-            int rank = cb3.SelectedIndex;
-            tb3.Header = $"{Cryptos[rank].name} {Cryptos[rank].price_usd}$";
+            if (lblSuggestions.ItemsSource != null)
+            {
+                lblSuggestions.Visibility = Visibility.Collapsed;
+                SearchBar.TextChanged -= new TextChangedEventHandler(SearchBar_TextChanged);
+                if (lblSuggestions.SelectedIndex != -1)
+                {
+                    SearchBar.Text = lblSuggestions.SelectedItem.ToString();
+                }
+            }
         }
     }
 }
