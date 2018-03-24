@@ -6,15 +6,43 @@
         xmlns:local="clr-namespace:CryptoPriceCheck"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="850">
-    <Grid Background="#FF62D5E9">
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="#FF9E9E9E" />
+        </Grid.Background>
         <TextBox Name="SearchBar" Grid.ZIndex="1"  HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="SearchBar_TextChanged" />
         <Button Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="60" Height="23" Click="btnSearch_Click" />
-
-        <Label Name="lblName" Content="Name" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="215,95,0,0" VerticalAlignment="Top" Width="260" Height="65" FontWeight="Bold" FontFamily="Arial Black" FontSize="20" />
-        <Label Name="lblPrice" Content="Price" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="545,95,0,0" VerticalAlignment="Top" Height="67" Width="205" />
-        <Label Name="lblRank" Content="Rank" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="55,95,0,0" VerticalAlignment="Top" Height="65" Width="75" />
         <ComboBox Name="lblSuggestions" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Width="120" Height="5" SelectionChanged="lblSuggestions_SelectionChanged_1">
         </ComboBox>
+
+        <Label Name="lblName" Content="Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="245,38,0,0" VerticalAlignment="Top" Width="290" Height="65" FontWeight="Bold" FontFamily="Courier New" FontSize="36" />
+        <Label Name="lblPrice" Content="Price" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="535,33,0,0" VerticalAlignment="Top" Height="75" Width="298" FontSize="24" RenderTransformOrigin="0.246,0.547" FontFamily="Courier New" />
+        <Label Name="lblRank" Content="Rank" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="135,38,0,0" VerticalAlignment="Top" Height="65" Width="75" FontSize="24" FontFamily="Courier New" />
+
         <Label Name="lblUpdates" Content="" HorizontalAlignment="Left" Margin="400,33,0,0" VerticalAlignment="Top" />
+        <Separator HorizontalAlignment="Left" Height="132" Margin="0,38,0,0" VerticalAlignment="Top" Width="843" RenderTransformOrigin="0.5,0.5" Background="Black" BorderThickness="0" />
+        <Separator HorizontalAlignment="Left" Height="100" Margin="103,239,0,0" VerticalAlignment="Top" Width="370" RenderTransformOrigin="0.493,1.093" Background="Black">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="90" />
+                    <TranslateTransform X="-56.746" Y="-61.843" />
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Label Name="lblInfo" Content="Name" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="35,130,0,0" VerticalAlignment="Top" Width="210" Height="40" FontSize="20" />
+        <Label Content="Market Cap(USD):" HorizontalAlignment="Left" Margin="10,219,0,0" VerticalAlignment="Top" Width="120" />
+        <Label Content="Volume (24h):" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top" Width="90" />
+        <Label Content="Circulating Supply:" HorizontalAlignment="Left" Margin="10,315,0,0" VerticalAlignment="Top" Width="120" />
+        <Label Content="Last Updated: " HorizontalAlignment="Left" Margin="631,6,0,0" VerticalAlignment="Top" Width="90" Height="27" />
+        <Label Name="lblLastUpdated" Content="" HorizontalAlignment="Left" Margin="721,7,0,0" VerticalAlignment="Top" Height="24" Width="112" />
+        <Label Content="Market Cap (BTC):" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top" Width="105" Height="28" />
+        <Label Content="Max Supply:" HorizontalAlignment="Left" Margin="10,346,0,0" VerticalAlignment="Top" Width="75" />
+        <Label Name="lblMarketCap_USD" Content="0 Dollarinos" HorizontalAlignment="Left" Margin="135,219,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Name="lblMarketCap_BTC" Content="0 Bitcoirinos" HorizontalAlignment="Left" Margin="135,251,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Name="lblVolume_24H" Content="0 Volumerino" HorizontalAlignment="Left" Margin="135,284,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Name="lblCirculating_Supply" Content="0 Circulrino" HorizontalAlignment="Left" Margin="135,315,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Name="lblMax_Supply" Content="0 Supplyrino" HorizontalAlignment="Left" Margin="135,346,0,0" VerticalAlignment="Top" Width="145" />
     </Grid>
 </Window>

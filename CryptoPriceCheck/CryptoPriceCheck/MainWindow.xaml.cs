@@ -28,6 +28,7 @@ namespace CryptoPriceCheck
     {
         public List<Coin> Cryptos { get; set; }
         public int ActiveCoinRank { get; set; }
+        public DateTime epoch = new DateTime(1970, 1, 1, 1, 0, 0, DateTimeKind.Local);
 
         public MainWindow()
         {
@@ -35,19 +36,19 @@ namespace CryptoPriceCheck
             GetCryptoCurrencyInfo();
             InitializeComponent();
 
-            UpdateUI(ActiveCoinRank);//We start showing the data for the #1 coin
+            UpdateUI();//We start showing the data for the #1 coin
 
             //dispatchtimer will update the UI every 30s
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimeronTick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 20);//will update every 1 min
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1, 0);//will update every 1 min
             dispatcherTimer.Start();
         }
 
         private void DispatcherTimeronTick(object sender, EventArgs eventArgs)
         {
             GetCryptoCurrencyInfo();
-            UpdateUI(ActiveCoinRank);
+            UpdateUI();
         }
 
         public void GetCryptoCurrencyInfo()
@@ -71,12 +72,19 @@ namespace CryptoPriceCheck
             Cryptos = JsonConvert.DeserializeObject<List<Coin>>(jsonString);
         }
 
-        public void UpdateUI(int CoinRank)
+        public void UpdateUI()
         {
-            lblName.Content = $"{Cryptos[CoinRank].name}";
-            lblPrice.Content = $"${Cryptos[CoinRank].price_usd}";
-            lblRank.Content = $"#{Cryptos[CoinRank].rank}";
             SearchBar.Text = "";
+            lblLastUpdated.Content = epoch.AddSeconds(long.Parse(Cryptos[ActiveCoinRank].last_updated));
+            //
+            lblName.Content = $"{Cryptos[ActiveCoinRank].name}";
+            lblPrice.Content = $"${Cryptos[ActiveCoinRank].price_usd} ({Cryptos[ActiveCoinRank].percent_change_24h}%)";
+            lblRank.Content = $"#{Cryptos[ActiveCoinRank].rank}";
+            //
+            lblInfo.Content = $"{Cryptos[ActiveCoinRank].name} ({Cryptos[ActiveCoinRank].symbol})";
+            lblMarketCap_USD.Content = $"${Cryptos[ActiveCoinRank].market_cap_usd}";
+            //long mrktcpbtc = long.Parse(Cryptos[ActiveCoinRank].market_cap_usd) / long.Parse(Cryptos[0].price_usd);
+            //lblMarketCap_BTC.Content = $"${mrktcpbtc}";
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
@@ -133,7 +141,7 @@ namespace CryptoPriceCheck
                     ActiveCoinRank = Int32.Parse(cn.rank) - 1;
                 }
             }
-            UpdateUI(ActiveCoinRank);
+            UpdateUI();
         }
     }
 }
