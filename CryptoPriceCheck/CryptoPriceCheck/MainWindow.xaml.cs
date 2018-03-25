@@ -28,7 +28,8 @@ namespace CryptoPriceCheck
     {
         public List<Coin> Cryptos { get; set; }
         public int ActiveCoinRank { get; set; }
-        public DateTime epoch = new DateTime(1970, 1, 1, 1, 0, 0, DateTimeKind.Local);
+        public DateTime epoch = new DateTime(1970, 1, 1, 2, 0, 0, DateTimeKind.Local);
+        public CultureInfo cultureInfo = CultureInfo.GetCultureInfo("en-US");
 
         public MainWindow()
         {
@@ -78,13 +79,18 @@ namespace CryptoPriceCheck
             lblLastUpdated.Content = epoch.AddSeconds(long.Parse(Cryptos[ActiveCoinRank].last_updated));
             //
             lblName.Content = $"{Cryptos[ActiveCoinRank].name}";
-            lblPrice.Content = $"${Cryptos[ActiveCoinRank].price_usd} ({Cryptos[ActiveCoinRank].percent_change_24h}%)";
+            lblPrice.Content = $"{String.Format(cultureInfo, "{0:C}", Double.Parse(Cryptos[ActiveCoinRank].price_usd, CultureInfo.InvariantCulture))} ({Cryptos[ActiveCoinRank].percent_change_24h}%)";
             lblRank.Content = $"#{Cryptos[ActiveCoinRank].rank}";
             //
             lblInfo.Content = $"{Cryptos[ActiveCoinRank].name} ({Cryptos[ActiveCoinRank].symbol})";
-            lblMarketCap_USD.Content = $"${Cryptos[ActiveCoinRank].market_cap_usd}";
-            //long mrktcpbtc = long.Parse(Cryptos[ActiveCoinRank].market_cap_usd) / long.Parse(Cryptos[0].price_usd);
-            //lblMarketCap_BTC.Content = $"${mrktcpbtc}";
+            lblMarketCap_USD.Content = $"{String.Format(cultureInfo, "{0:C}", Double.Parse(Cryptos[ActiveCoinRank].market_cap_usd, CultureInfo.InvariantCulture))}";
+
+            int mrktcpbtc = (int)(Double.Parse(Cryptos[ActiveCoinRank].market_cap_usd, CultureInfo.InvariantCulture) / Double.Parse(Cryptos[0].price_usd, CultureInfo.InvariantCulture));
+            lblMarketCap_BTC.Content = $"{ mrktcpbtc} {Cryptos[0].symbol}";
+
+            lblVolume_24H.Content = $"{String.Format(cultureInfo, "{0:C}", Double.Parse(Cryptos[ActiveCoinRank].volume_usd_24h, CultureInfo.InvariantCulture))}";
+            lblCirculating_Supply.Content = $"{Cryptos[ActiveCoinRank].total_supply} {Cryptos[ActiveCoinRank].symbol}";
+            lblMax_Supply.Content = $"{Double.Parse(Cryptos[ActiveCoinRank].total_supply)} {Cryptos[ActiveCoinRank].symbol}";
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)

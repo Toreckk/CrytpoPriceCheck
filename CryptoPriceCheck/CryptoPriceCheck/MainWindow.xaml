@@ -32,17 +32,17 @@
             </Separator.RenderTransform>
         </Separator>
         <Label Name="lblInfo" Content="Name" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="35,130,0,0" VerticalAlignment="Top" Width="210" Height="40" FontSize="20" />
-        <Label Content="Market Cap(USD):" HorizontalAlignment="Left" Margin="10,219,0,0" VerticalAlignment="Top" Width="120" />
-        <Label Content="Volume (24h):" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top" Width="90" />
-        <Label Content="Circulating Supply:" HorizontalAlignment="Left" Margin="10,315,0,0" VerticalAlignment="Top" Width="120" />
+        <Label Content="Market Cap(USD):" HorizontalAlignment="Left" Margin="10,253,0,0" VerticalAlignment="Top" Width="120" />
+        <Label Content="Volume (24h):" HorizontalAlignment="Left" Margin="10,318,0,0" VerticalAlignment="Top" Width="90" />
+        <Label Content="Circulating Supply:" HorizontalAlignment="Left" Margin="10,349,0,0" VerticalAlignment="Top" Width="120" />
         <Label Content="Last Updated: " HorizontalAlignment="Left" Margin="631,6,0,0" VerticalAlignment="Top" Width="90" Height="27" />
         <Label Name="lblLastUpdated" Content="" HorizontalAlignment="Left" Margin="721,7,0,0" VerticalAlignment="Top" Height="24" Width="112" />
-        <Label Content="Market Cap (BTC):" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top" Width="105" Height="28" />
-        <Label Content="Max Supply:" HorizontalAlignment="Left" Margin="10,346,0,0" VerticalAlignment="Top" Width="75" />
-        <Label Name="lblMarketCap_USD" Content="0 Dollarinos" HorizontalAlignment="Left" Margin="135,219,0,0" VerticalAlignment="Top" Width="145" />
-        <Label Name="lblMarketCap_BTC" Content="0 Bitcoirinos" HorizontalAlignment="Left" Margin="135,251,0,0" VerticalAlignment="Top" Width="145" />
-        <Label Name="lblVolume_24H" Content="0 Volumerino" HorizontalAlignment="Left" Margin="135,284,0,0" VerticalAlignment="Top" Width="145" />
-        <Label Name="lblCirculating_Supply" Content="0 Circulrino" HorizontalAlignment="Left" Margin="135,315,0,0" VerticalAlignment="Top" Width="145" />
-        <Label Name="lblMax_Supply" Content="0 Supplyrino" HorizontalAlignment="Left" Margin="135,346,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Content="Market Cap (BTC):" HorizontalAlignment="Left" Margin="10,285,0,0" VerticalAlignment="Top" Width="105" Height="28" />
+        <Label Content="Max Supply:" HorizontalAlignment="Left" Margin="10,222,0,0" VerticalAlignment="Top" Width="75" />
+        <Label Name="lblMarketCap_USD" Content="0 Dollarinos" HorizontalAlignment="Left" Margin="135,252,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Name="lblMarketCap_BTC" Content="0 Bitcoirinos" HorizontalAlignment="Left" Margin="135,285,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Name="lblVolume_24H" Content="0 Volumerino" HorizontalAlignment="Left" Margin="135,318,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Name="lblCirculating_Supply" Content="0 Circulrino" HorizontalAlignment="Left" Margin="135,349,0,0" VerticalAlignment="Top" Width="145" />
+        <Label Name="lblMax_Supply" Content="0 Supplyrino" HorizontalAlignment="Left" Margin="135,222,0,0" VerticalAlignment="Top" Width="145" />
     </Grid>
 </Window>
